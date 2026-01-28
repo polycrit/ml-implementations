@@ -94,3 +94,19 @@ def train_lr_2d(data, labels, learning_rate, lam, epsilon, max_iter):
         return np.where(scores > 0, 1, -1)
 
     return predict
+
+
+if __name__ == "__main__":
+    from generate_dataset_2d import linear_separable, plot_decision_boundary
+    import matplotlib.pyplot as plt
+
+    ds = linear_separable(n=200, class_sep=2.0, seed=42)
+    labels = (ds.y + 1) // 2
+
+    predict = train_lr_2d(ds.X, labels, learning_rate=0.1, lam=0.01, epsilon=1e-6, max_iter=1000)
+
+    accuracy = np.mean(predict(ds.X) == ds.y)
+    print(f"Training accuracy: {accuracy * 100:.2f}%")
+
+    plot_decision_boundary(ds, predict, title="Logistic Regression")
+    plt.show()

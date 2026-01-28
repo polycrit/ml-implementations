@@ -23,3 +23,18 @@ def train_perceptron_2d(X, y, n_iter=100):
         return out
 
     return predict
+
+
+if __name__ == "__main__":
+    from generate_dataset_2d import linear_separable, plot_decision_boundary
+    import matplotlib.pyplot as plt
+
+    ds = linear_separable(n=200, class_sep=3.0, seed=42)
+
+    predict = train_perceptron_2d(ds.X, ds.y, n_iter=100)
+
+    accuracy = np.mean(predict(ds.X) == ds.y)
+    print(f"Training accuracy: {accuracy * 100:.2f}%")
+
+    plot_decision_boundary(ds, predict, title="Perceptron")
+    plt.show()
